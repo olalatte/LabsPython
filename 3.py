@@ -5,10 +5,15 @@ page_text = BeautifulSoup(requests.get('https://meduza.io/').text, "html.parser"
 my_file = open("lab3_page_text.txt", "w", encoding='utf-8')
 my_file.write(page_text.prettify())
 my_file.close()
-search_tree = page_text.find_all('div', ['Page-section'])
+search_tree = page_text.find_all('div', ['PageSection PageSection--has1block',
+                                         'PageSection PageSection--has2blocks',
+                                         'PageSection PageSection--has3blocks',
+                                         'PageSection PageSection--has4blocks',
+                                         'PageSection PageSection--has5blocks'
+                                         'PageSection PageSection--has6blocks'])
 news = []
 for i in search_tree:
-    elements = i.find_all(['li','div', 'ul', 'article'], [
+    elements = i.find_all(['article'], [
 
                                             'PostsListItem PostsListItem--isInPostsListItemHead1to1 PostsListItem--light PostsListItem--index-0 PostsListItem--1to1 PostsListItem--news',
                                             'PostsListItem PostsListItem--isInPostsListItem1to1 PostsListItem--light PostsListItem--index-1 PostsListItem--1to1 PostsListItem--news',
@@ -36,7 +41,10 @@ for i in search_tree:
                                             'MediaBlock MediaBlock--feature MediaBlock--1to4',
                                             'PostsListItem PostsListItem--isInPostsListItem1to1 PostsListItem--light PostsListItem--index-1 PostsListItem--1to1 PostsListItem--card',
                                             'PostsListItem PostsListItem--isInPostsListItemHead1to1 PostsListItem--light PostsListItem--index-0 PostsListItem--1to1 PostsListItem--card',
-                                            'CardBlock CardBlock--1to3'
+                                            'CardBlock CardBlock--1to3',
+                                            
+                                            'PostsListItem PostsListItem--isInPostsListItem1to2 PostsListItem--light PostsListItem--index-1 PostsListItem--1to2 PostsListItem--news'
+                                             
                                             ])
 
     for elem in elements:
@@ -59,7 +67,13 @@ for i in search_tree:
                                        'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItem1to1 NewsTitle-first--featured',
                                        'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItemHead1to1 NewsTitle-first--featured',
                                        'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItem1to1',
-                                       'NewsTitle-first NewsTitle-first--MediaBlock NewsTitle-first--isInMediaBlock1to4'
+                                       'NewsTitle-first NewsTitle-first--MediaBlock NewsTitle-first--isInMediaBlock1to4',
+                                       
+                                       'NewsTitle-first NewsTitle-first--news NewsTitle-first--isInPostsListItem1to2',
+                                       'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItem1to2',
+                                       'NewsTitle-first NewsTitle-first--fun NewsTitle-first--isInPostsListItem1to2',
+                                       'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItemHead1to1',
+                                       'NewsTitle-first NewsTitle-first--feature NewsTitle-first--isInPostsListItemHead1to2'
                                        ]).text
         except AttributeError:
             title = '[без заголовка]'
